@@ -6,45 +6,37 @@
 [![npm](https://img.shields.io/npm/v/@kindling/twig)](https://www.npmjs.com/package/@kindling/twig)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-Part of [Kindling](https://github.com/Kind-ling) — open infrastructure for the agent economy.
+Part of [Kindling](https://github.com/Kind-ling) — agent SEO for the agent economy.
+
+---
+
+## Free audit. Paid monitoring. Premium intelligence.
+
+| Tier | Features | Price |
+|------|---------|-------|
+| **Free** | `twig analyze` — score your descriptions. `twig optimize` — get better variants. | Always free |
+| **Monitor** | Weekly re-scoring, competitive position, intent trend alerts | $0.50–2.00/report via x402 |
+| **Intelligence** | Category benchmarks, intent corpus, competitive index | $0.50–1.00/query via x402 |
+| **Enterprise** | 15% of measured x402 revenue increase | Performance-based, zero if no improvement |
 
 ---
 
 ## The Problem
 
-Every MCP tool has a description. That description is what an LLM reads when deciding whether to call your tool. It's the only signal between "selected" and "skipped".
+Every MCP tool has a description. That description is what an LLM reads when deciding whether to call your service. It's the only signal between "selected" and "skipped".
 
 Most descriptions are garbage.
 
-| Tool | Current Description | What Agents See |
+| Tool | Current Description | Twig Score |
 |------|--------------------|----|
-| `exa/answer` | "AI-powered answer" | Skip |
-| `wordspace/invoke` | "Run wordspace AI agent loop" | Skip |
-| `exa/find-similar` | "Find similar pages" | Skip |
-| `jupiter/portfolio` | "Wallet portfolio positions" | Skip |
+| `exa/answer` | "AI-powered answer" | F (28/100) |
+| `wordspace/invoke` | "Run wordspace AI agent loop" | F (31/100) |
+| `exa/find-similar` | "Find similar pages" | F (33/100) |
+| `jupiter/portfolio` | "Wallet portfolio positions" | D (42/100) |
 
-These tools are useful. Their descriptions are not. The tools that win are the ones with descriptions that tell agents exactly what they'll get.
+These tools are useful. Their descriptions are not. And getting indexed in x402-discovery or MCPay doesn't help if agents skip you because they can't tell what you do.
 
----
-
-## The Solution
-
-Twig scores your current descriptions (0-100) and generates optimized variants. Revenue model: **15% of measured x402 revenue increase**. Pay nothing if it doesn't work.
-
-```bash
-npx @kindling/twig analyze https://myservice.com/.well-known/agent.json
-```
-
-```
-exa/answer          | F |  28 | Too short — agents skip vague tools
-wordspace/invoke    | F |  31 | "Run X" tells agents nothing about what X does
-jupiter/portfolio   | D |  42 | Just names the category, not the capability
-exa/search          | B |  71 | ✓ OK
-
-Average score: 43/100
-
-Run: twig optimize https://myservice.com/.well-known/agent.json
-```
+Getting indexed is table stakes. Twig helps you get **chosen**.
 
 ---
 
@@ -55,35 +47,49 @@ npm install -g @kindling/twig
 ```
 
 ```bash
-# Score your current descriptions
-twig analyze https://yourservice.com/.well-known/agent.json
+# Free — score your descriptions
+twig analyze https://myservice.com/.well-known/agent.json
 
-# Get optimized variants
-twig optimize https://yourservice.com/.well-known/agent.json
+# Free — get optimized variants
+twig optimize https://myservice.com/.well-known/agent.json
 
-# Set revenue baseline before optimization
-twig measure 0xYourWallet --baseline
+# Paid — set up weekly monitoring
+twig monitor https://myservice.com/.well-known/agent.json
 
-# Compare after deploying new descriptions (14+ days later)
-twig measure 0xYourWallet --compare
+# Paid — see how you rank in your category
+twig competitive crypto-defi
 
-# Full report with Twig fee calculation
-twig report 0xYourWallet --period 30d
+# Paid — see what agents are actually searching for
+twig intents crypto-defi
 ```
 
 ---
 
 ## Scoring Model
 
-Three dimensions, 0-100 each:
+Three dimensions, 0–100 each:
 
-| Dimension | Weight | Measures |
-|-----------|--------|---------|
-| **Intent Match** | 40% | Does description match what agents actually search for? |
-| **Specificity** | 35% | Are outputs, constraints, and examples concrete? |
-| **Selectability** | 25% | Would an LLM choose this over similar tools? |
+| Dimension | Weight | What it measures |
+|-----------|--------|-----------------|
+| **Intent Match** | 40% | Similarity to top agent queries for your category |
+| **Specificity** | 35% | Output format, parameters, constraints, examples present? |
+| **Differentiation** | 25% | Do you stand out from similar services in your category? |
 
 **Grades:** A (85+) · B (70+) · C (55+) · D (40+) · F (<40)
+
+Score below 40 = agents are skipping you.
+
+---
+
+## What Twig Monitors
+
+**Your descriptions** — re-scored weekly against a live intent corpus. Score changes alert you when your positioning drifts.
+
+**Your competitive position** — how you rank vs. similar services in your category. Know when a competitor improves and overtakes you.
+
+**Intent trends** — what agents are searching for this week vs. last. The queries change. Your descriptions need to keep up.
+
+**Volume correlation** — description changes mapped to x402 volume changes. Close the loop between optimization and revenue.
 
 ---
 
@@ -92,26 +98,13 @@ Three dimensions, 0-100 each:
 Twig generates 3 variants per tool:
 
 **Functional** — Action verb + what + return type:
-> *"Fetches market data for any token. Returns JSON with price, 24h change, volume, and market cap. Accepts token symbol or contract address."*
+> *"Answers questions with real-time web sources. Returns a cited response with source URLs, confidence score, and supporting quotes. Best for research and fact-checking."*
 
 **Structured** — Input → output with constraints:
-> *"Token price lookup. Input: symbol or address. Returns: price (USD/EUR/BTC), 24h change, volume, market cap. Supports 10k+ tokens across 100+ chains."*
+> *"Web Q&A. Input: question string. Returns: answer (string), sources (URL array), confidence (0-1). Supports: factual queries, current events, research synthesis."*
 
-**Contextual** — Use case → action → output:
-> *"Use when you need real-time token pricing. Queries CoinGecko across 100+ chains. Returns structured price data with 24h metrics."*
-
----
-
-## Revenue Model
-
-Twig is free to use. We charge 15% of measured revenue increase, paid in USDC on Base.
-
-- Set a baseline before optimization: `twig measure <wallet> --baseline`
-- Run for 14-30 days with new descriptions
-- Compare: `twig measure <wallet> --compare`
-- Revenue up? Pay 15% of the delta. Revenue flat or down? Pay nothing.
-
-Everything is measured on-chain. No self-reporting. No trust required.
+**Contextual** — Use case → action → output (highest LLM selectability):
+> *"Use when you need a factual answer with sourced citations. Queries the web in real-time and synthesizes a response with URLs and supporting quotes. Best for research, fact-checking, and current events."*
 
 ---
 
@@ -119,19 +112,37 @@ Everything is measured on-chain. No self-reporting. No trust required.
 
 ### `exa/answer`
 
-**Before:** `AI-powered answer`
+**Before:** `AI-powered answer`  ← F (28/100)
 
-**After:** `Use when you need a factual answer with sourced citations. Queries the web in real-time and synthesizes a response with URLs and supporting quotes. Best for research, fact-checking, and current events.`
-
-**Score:** F (28) → B (72)
+**After (Contextual):** `Use when you need a factual answer with sourced citations. Queries the web in real-time and synthesizes a response with source URLs and supporting quotes. Best for research, fact-checking, and current events.`  ← B (72/100)
 
 ### `wordspace/invoke`
 
-**Before:** `Run wordspace AI agent loop`
+**Before:** `Run wordspace AI agent loop`  ← F (31/100)
 
-**After:** `Executes a multi-step Wordspace agent workflow. Input: task description and optional context. Returns: completed task output, intermediate steps, and tool calls made. Best for complex tasks requiring multiple tool invocations. $2/call.`
+**After (Structured):** `Executes a Wordspace multi-step agent workflow. Input: task description and optional context. Returns: completed output, intermediate steps, tool calls made. Best for complex tasks requiring multiple tool invocations. $2/call.`  ← B (74/100)
 
-**Score:** F (31) → B (74)
+---
+
+## Revenue Model
+
+### Standard (Monitoring)
+Weekly reports are gated via x402 on Base. Set up once, runs automatically.
+
+```bash
+twig monitor 0xYourWallet --url https://myservice.com/.well-known/agent.json
+```
+
+### Enterprise (Performance-based)
+For services with existing x402 volume:
+
+1. `twig measure 0xWallet --baseline` — record 7-day baseline
+2. Deploy Twig-optimized descriptions
+3. `twig measure 0xWallet --compare` — measure delta (14–30 days later)
+4. Pay 15% of the revenue increase in USDC on Base
+5. Revenue flat or down? Pay nothing.
+
+Everything measured via on-chain USDC transfer logs. No self-reporting.
 
 ---
 
@@ -141,7 +152,26 @@ Everything is measured on-chain. No self-reporting. No trust required.
 - MCP servers (JSON-RPC `tools/list`)
 - OpenAPI specs
 - Local JSON schema files
+- x402-discovery catalog (for competitive analysis)
 
 ---
 
-*Twig v0.1.0 · [Permanent Upper Class](https://permanentupperclass.com) · MIT*
+## CLI Reference
+
+```
+twig analyze <url>              Score descriptions (0-100, free)
+twig optimize <url>             Generate 3 optimized variants (free)
+twig monitor <url>              Weekly monitoring (paid via x402)
+twig competitive <category>     Category ranking (paid via x402)
+twig intents <category>         Top agent queries (paid via x402)
+twig measure <wallet>           Measure x402 revenue
+twig measure <wallet> --baseline   Save baseline
+twig measure <wallet> --compare    Compare to baseline
+twig report <wallet>            Revenue report with fee calculation
+
+Categories: crypto-defi, data-feeds, research, computation, media, communication, general
+```
+
+---
+
+*Twig v0.1.0 · [Kind-ling](https://github.com/Kind-ling) · [Permanent Upper Class](https://permanentupperclass.com) · MIT*
