@@ -9,7 +9,7 @@
 
 import { fetchMCPTools, fetchAgentCard } from './analyzer/fetcher.js';
 import { scoreDescription } from './analyzer/scorer.js';
-import { detectCategory, INTENT_QUERIES } from './analyzer/intent-corpus.js';
+import { detectCategory, INTENT_QUERIES, type Category } from './analyzer/intent-corpus.js';
 import { generateOptimizedDescriptions } from './optimizer/generator.js';
 import { measureRevenue } from './measurer/onchain.js';
 import { saveBaseline, loadBaseline, compareToBaseline } from './measurer/baseline.js';
@@ -96,8 +96,10 @@ async function runOptimize(url: string, category?: string): Promise<void> {
   }
 
   const optimizations = result.tools.map(tool => {
-    const cat = (category as Parameters<typeof detectCategory>[1] | undefined)
-      ?? detectCategory(tool.name, tool.description);
+    const detected = detectCategory(tool.name, tool.description);
+    const cat: Category = (category && Object.keys(INTENT_QUERIES).includes(category))
+      ? (category as Category)
+      : detected;
     const score = scoreDescription(tool, INTENT_QUERIES[cat]);
     return generateOptimizedDescriptions(tool, score, cat);
   });
