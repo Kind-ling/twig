@@ -1,0 +1,23 @@
+{
+  "name": "@kindling/twig",
+  "version": "0.1.0",
+  "description": "MCP tool description optimizer. Agents choose you or they don't. Twig makes them choose you.",
+  "author": "Permanent Upper Class",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "twig": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/cli.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.0",
+    "vitest": "^2.1.0",
+    "tsx": "^4.7.0",
+    "@types/node": "^20.0.0"
+  }
+}
