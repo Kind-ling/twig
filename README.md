@@ -3,7 +3,7 @@
 > Agents choose you or they don't. Twig makes them choose you.
 
 [![CI](https://github.com/Kind-ling/twig/actions/workflows/ci.yml/badge.svg)](https://github.com/Kind-ling/twig/actions/workflows/ci.yml)
-[![npm](https://img.shields.io/npm/v/@kindling/twig)](https://www.npmjs.com/package/@kindling/twig)
+[![npm](https://img.shields.io/npm/v/@kind-ling/twig)](https://www.npmjs.com/package/@kind-ling/twig)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 Part of [Kindling](https://github.com/Kind-ling) — agent SEO for the agent economy.
@@ -43,7 +43,7 @@ Getting indexed is table stakes. Twig helps you get **chosen**.
 ## Quick Start
 
 ```bash
-npm install -g @kindling/twig
+npm install -g @kind-ling/twig
 ```
 
 ```bash
