@@ -37,7 +37,19 @@ export function loadHistory(normalizedUrl: string, baseDir?: string): MonitorRun
   const path = historyPath(normalizedUrl, baseDir);
   if (!existsSync(path)) return [];
   const raw = readFileSync(path, 'utf8');
-  return JSON.parse(raw) as MonitorRun[];
+  try {
+    return JSON.parse(raw) as MonitorRun[];
+  } catch (err) {
+    process.stderr.write(
+      JSON.stringify({
+        level: 'warn',
+        event: 'history-parse-error',
+        path,
+        message: err instanceof Error ? err.message : String(err),
+      }) + '\n'
+    );
+    return [];
+  }
 }
 
 export function appendHistory(run: MonitorRun, baseDir?: string): void {

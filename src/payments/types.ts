@@ -13,7 +13,7 @@ export interface PaymentReceipt {
 
 export interface PaymentGateResult {
   allowed: boolean;
-  reason: 'first-run' | 'receipt-found' | 'payment-verified' | 'verification-failed-open';
+  reason: 'first-run' | 'receipt-found' | 'payment-required' | 'payment-verified' | 'verification-failed-open';
   receipt?: PaymentReceipt;
   unverified?: boolean;
 }

@@ -51,7 +51,20 @@ function receiptsPath(urlHash: string, baseDir?: string): string {
 export function loadReceipts(urlHash: string, baseDir?: string): PaymentReceipt[] {
   const path = receiptsPath(urlHash, baseDir);
   if (!existsSync(path)) return [];
-  return JSON.parse(readFileSync(path, 'utf8')) as PaymentReceipt[];
+  const raw = readFileSync(path, 'utf8');
+  try {
+    return JSON.parse(raw) as PaymentReceipt[];
+  } catch (err) {
+    process.stderr.write(
+      JSON.stringify({
+        level: 'warn',
+        event: 'receipts-parse-error',
+        path,
+        message: err instanceof Error ? err.message : String(err),
+      }) + '\n'
+    );
+    return [];
+  }
 }
 
 function saveReceipt(receipt: PaymentReceipt, baseDir?: string): void {
@@ -75,50 +88,23 @@ export function buildPaymentRequest(normalizedUrl: string): PaymentRequest {
 
 /**
  * Verify a USDC transfer on Base by checking the tx receipt via JSON-RPC.
- * We use eth_getTransactionByHash and check the `to` field matches our wallet.
- * Full ERC-20 log parsing is complex without ethers — we do a best-effort check.
- * Returns true if we can confirm the tx went to the right address, false otherwise.
+ *
+ * TODO: Implement real on-chain verification:
+ *   1. Call eth_getTransactionReceipt with txHash via BASE_RPC_URL
+ *   2. Decode the ERC-20 Transfer log (topic0 = keccak256("Transfer(address,address,uint256)"))
+ *   3. Verify log.topics[2] (to address) == recipientAddress (checksummed)
+ *   4. Verify log.data (value) >= expectedAmount (in USDC base units, 6 decimals)
+ *   5. Verify the log's contract address == USDC contract on Base
+ *
+ * Until implemented, returns false. The fail-open path in checkPaymentGate
+ * handles false correctly by allowing with an [PAYMENT UNVERIFIED] marker.
  */
 export async function verifyOnChain(
-  txHash: string,
-  recipientAddress: string,
+  _txHash: string,
+  _recipientAddress: string,
   _amount: string
 ): Promise<boolean> {
-  try {
-    const body = JSON.stringify({
-      jsonrpc: '2.0',
-      method: 'eth_getTransactionByHash',
-      params: [txHash],
-      id: 1,
-    });
-
-    const response = await fetch(BASE_RPC_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body,
-      signal: AbortSignal.timeout(10_000),
-    });
-
-    if (!response.ok) return false;
-
-    const json = (await response.json()) as {
-      result?: {
-        to?: string;
-        blockNumber?: string;
-      } | null;
-    };
-
-    const tx = json.result;
-    if (!tx || !tx.blockNumber) return false; // not mined yet
-
-    // For USDC transfers, `to` is the USDC contract, not our wallet.
-    // We check the tx exists and is mined. Full log verification would require
-    // eth_getTransactionReceipt + decoding ERC-20 Transfer log.
-    // For now: confirm tx is mined and non-null (fail-open handles the rest).
-    return true;
-  } catch {
-    return false;
-  }
+  return false;
 }
 
 /**
@@ -150,7 +136,7 @@ export async function checkPaymentGate(opts: {
 
   // No receipt — need a tx hash
   if (!txHash) {
-    return { allowed: false, reason: 'payment-verified' };
+    return { allowed: false, reason: 'payment-required' };
   }
 
   // Try to verify on-chain

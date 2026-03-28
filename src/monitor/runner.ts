@@ -6,7 +6,7 @@
 import { fetchMCPTools, fetchAgentCard } from '../analyzer/fetcher.js';
 import { scoreDescription } from '../analyzer/scorer.js';
 import { detectCategory, INTENT_QUERIES } from '../analyzer/intent-corpus.js';
-import { checkPaymentGate, buildPaymentRequest, getPaymentAddress } from '../payments/x402-gate.js';
+import { checkPaymentGate, buildPaymentRequest } from '../payments/x402-gate.js';
 import { normalizeUrl, appendHistory, latestRun } from './history.js';
 import { diffRuns } from './diff.js';
 import { getCompetitivePosition } from './competitive.js';
@@ -41,14 +41,6 @@ export async function runMonitor(url: string, opts: RunOptions = {}): Promise<Ru
   let paymentUnverified = false;
 
   if (!isFirstRun) {
-    let walletAddress: string;
-    try {
-      walletAddress = getPaymentAddress();
-    } catch (err) {
-      // TWIG_PAYMENT_ADDRESS not set — will be caught inside gate
-      walletAddress = '';
-    }
-
     const gateResult = await checkPaymentGate({
       isFirstRun: false,
       txHash: opts.txHash,
