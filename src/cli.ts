@@ -10,6 +10,7 @@
  */
 
 import { fetchMCPTools, fetchAgentCard } from './analyzer/fetcher.js';
+import { runCompetitive } from './competitive/index.js';
 import { scoreDescription } from './analyzer/scorer.js';
 import { detectCategory, INTENT_QUERIES, type Category } from './analyzer/intent-corpus.js';
 import { generateOptimizedDescriptions } from './optimizer/generator.js';
@@ -45,6 +46,9 @@ async function main(): Promise<void> {
       } else {
         await runMonitorCmd(target ?? '', flags);
       }
+      break;
+    case 'competitive':
+      await runCompetitiveCmd(target ?? '');
       break;
     default:
       printHelp();
@@ -250,6 +254,52 @@ async function runMonitorHistory(url: string): Promise<void> {
     );
   }
   process.stdout.write('\n');
+}
+
+async function runCompetitiveCmd(url: string): Promise<void> {
+  if (!url) { console.error('Usage: twig competitive <url>'); process.exit(1); }
+
+  console.log(`\n🏆 Competitive analysis: ${url}\n`);
+
+  const result = await runCompetitive(url);
+
+  if (result.note) {
+    console.log(`⚠️  ${result.note}`);
+    console.log(`\nCategory: ${result.category} | Your rank: ${result.rank}/${result.total} (${result.percentile}th percentile)\n`);
+    return;
+  }
+
+  // Print table header
+  const COL_RANK = 4;
+  const COL_NAME = 30;
+  const COL_SCORE = 7;
+  const COL_URL = 50;
+
+  const header = [
+    '   ' + 'Rank'.padEnd(COL_RANK),
+    'Name'.padEnd(COL_NAME),
+    'Score'.padEnd(COL_SCORE),
+    'URL',
+  ].join(' ');
+  const divider = '-'.repeat(header.length);
+
+  console.log(header);
+  console.log(divider);
+
+  const ourUrlNorm = url.replace(/\/$/, '').toLowerCase();
+
+  for (const peer of result.peers) {
+    const isOurs = peer.url.replace(/\/$/, '').toLowerCase() === ourUrlNorm;
+    const arrow = isOurs ? '→' : ' ';
+    const rank = String(peer.rank).padEnd(COL_RANK);
+    const name = peer.name.substring(0, COL_NAME - 1).padEnd(COL_NAME);
+    const score = String(peer.score).padEnd(COL_SCORE);
+    const peerUrl = peer.url.substring(0, COL_URL);
+    console.log(`${arrow}  ${rank} ${name} ${score} ${peerUrl}`);
+  }
+
+  console.log(divider);
+  console.log(`\nCategory: ${result.category} | Your rank: ${result.rank}/${result.total} (${result.percentile}th percentile)\n`);
 }
 
 function printHelp(): void {
