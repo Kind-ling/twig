@@ -4,15 +4,34 @@
   "description": "MCP tool description optimizer. Agents choose you or they don't. Twig makes them choose you.",
   "author": "Permanent Upper Class",
   "license": "MIT",
+  "homepage": "https://github.com/Kind-ling/twig",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Kind-ling/twig.git"
+  },
   "type": "module",
   "bin": {
-    "twig": "./dist/cli.js"
+    "twig": "./dist/src/cli.js"
   },
+  "main": "./dist/src/analyzer/scorer.js",
+  "exports": {
+    ".": "./dist/src/analyzer/scorer.js",
+    "./scorer": "./dist/src/analyzer/scorer.js",
+    "./optimizer": "./dist/src/optimizer/generator.js",
+    "./fetcher": "./dist/src/analyzer/fetcher.js"
+  },
+  "files": [
+    "dist/",
+    "data/",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && node scripts/fix-shebang.js",
     "dev": "tsx src/cli.ts",
     "test": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run typecheck && npm test && npm run build"
   },
   "devDependencies": {
     "typescript": "^5.3.0",
