@@ -108,7 +108,7 @@ export function detectCategory(toolName: string, description: string): Category 
     'data-feeds': ['price', 'market', 'feed', 'rate', 'ticker', 'quote', 'trending', 'volume'],
     'media': ['image', 'video', 'audio', 'music', '3d', 'generate', 'animation', 'speech', 'transcribe', 'upscale'],
     'research': ['search', 'web', 'tweet', 'twitter', 'news', 'article', 'find', 'similar', 'answer', 'extract', 'content'],
-    'computation': ['compute', 'calculate', 'run', 'execute', 'inference', 'embedding', 'classify', 'transform'],
+    'computation': ['compute', 'calculate', 'run', 'execute', 'inference', 'embedding', 'classify', 'transform', 'scan', 'detect', 'injection', 'safety', 'security', 'jailbreak', 'violation', 'threat'],
     'communication': ['email', 'send', 'inbox', 'message', 'notify', 'post', 'slack', 'discord'],
     'general': [],
   };

@@ -34,6 +34,11 @@ export function generateOptimizedDescriptions(
   original: ScoreResult,
   category: Category
 ): OptimizationResult {
+  // If description is already specific and long, preserve it as base
+  // Only generate variants that improve on the weakest dimension
+  if (original.scores.specificity >= 45 && tool.description.length > 80) {
+    return generatePreservingVariants(tool, original, category);
+  }
   const params = extractParams(tool);
   const name = tool.name;
 
@@ -155,6 +160,51 @@ function getCategoryUseCase(name: string, category: Category): string {
     'general': 'Use when you need a utility operation.',
   };
   return cases[category];
+}
+
+function generatePreservingVariants(
+  tool: ToolDefinition,
+  original: ScoreResult,
+  category: Category
+): OptimizationResult {
+  const desc = tool.description.trim();
+  const useCase = getCategoryUseCase(tool.name, category);
+  const returnHint = getCategoryReturnHint(category);
+
+  // Variant 1: original as-is (it's already good)
+  const v1: OptimizedDescription = {
+    variant: 1,
+    style: 'functional',
+    description: desc,
+    rationale: 'Original description has strong specificity — preserved.',
+    estimatedImprovement: 'No change needed for specificity',
+  };
+
+  // Variant 2: prepend use-case context to original
+  const v2: OptimizedDescription = {
+    variant: 2,
+    style: 'contextual',
+    description: `${useCase} ${desc}`,
+    rationale: 'Prepends use-case signal to improve intent match.',
+    estimatedImprovement: '+10-20 intent match score',
+  };
+
+  // Variant 3: original + ensure return format is explicit
+  const hasReturn = /returns?|outputs?/i.test(desc);
+  const v3: OptimizedDescription = {
+    variant: 3,
+    style: 'structured',
+    description: hasReturn ? desc : `${desc} ${returnHint}`,
+    rationale: hasReturn ? 'Return format already explicit.' : 'Added explicit return format.',
+    estimatedImprovement: hasReturn ? 'No change needed' : '+5-15 specificity score',
+  };
+
+  return {
+    tool: tool.name,
+    original,
+    variants: [v1, v2, v3],
+    recommended: original.scores.intentMatch < 50 ? v2 : v1,
+  };
 }
 
 function selectRecommended(variants: OptimizedDescription[], original: ScoreResult): OptimizedDescription {
