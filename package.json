@@ -31,12 +31,20 @@
     "dev": "tsx src/cli.ts",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
+    "serve": "node dist/src/server/index.js",
+    "serve:dev": "tsc --watch & node --watch dist/src/server/index.js",
     "prepublishOnly": "npm run typecheck && npm test && npm run build"
   },
   "devDependencies": {
-    "typescript": "^5.3.0",
-    "vitest": "^2.1.0",
+    "@types/node": "^20.0.0",
+    "@types/supertest": "6.0.2",
+    "supertest": "7.0.0",
     "tsx": "^4.7.0",
-    "@types/node": "^20.0.0"
+    "typescript": "^5.3.0",
+    "vitest": "^2.1.0"
+  },
+  "dependencies": {
+    "@types/express": "5.0.1",
+    "express": "4.21.2"
   }
 }

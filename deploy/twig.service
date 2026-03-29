@@ -1,0 +1,17 @@
+[Unit]
+Description=Twig API Server
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+EnvironmentFile=/etc/twig.env
+ExecStart=node /usr/local/lib/node_modules/@kind-ling/twig/dist/src/server/index.js
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=twig
+
+[Install]
+WantedBy=multi-user.target
