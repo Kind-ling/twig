@@ -11,7 +11,7 @@
 | 1b | @AgentlyHQ | AgentlyHQ/aixyz | Twitter DM | 81★ | Active agent framework builder, Twitter open | No reply |
 | 1c | @BitRouterAI | bitrouter/bitrouter | Twitter DM | 26★ | x402 routing, pays-per-call — every skipped description is lost revenue | No reply |
 | 2 | @nichxbt (nirholas) | nirholas/x402-deploy | Twitter DM | 17★ | "Turn any API into a paid service" — if agents can't read the description, they skip it | Sent ✅ |
-| 3 | @ryanthegentry | ryanthegentry/402index-mcp-server | Twitter DM | 2★ | 402 Index has 15K+ endpoints — if description quality is low across the catalog, every provider loses | No reply |
+| 3 | @ryanthegentry | ryanthegentry/402index-mcp-server | Twitter DM | 2★ | 402 Index has 15K+ endpoints — if description quality is low across the catalog, every provider loses | Sent ✅ |
 | 4 | @androgavidia | leandrogavidia/solx402-mcp-server | Twitter DM | 6★ | Solana x402 MCP — niche positioning, better description = better agent routing | No reply |
 | 5 | @blockrunai | BlockRunAI/blockrun-mcp | Twitter DM | 11★ | 41+ models, pay-per-request — agents won't pay without a clear description | No reply |
 | 6 | @WilliamBryk | exa-labs/exa-mcp-server | Twitter DM | 4110★ | Sent ✅ — F-20 score, "search engine for AI has a discoverability problem" | Sent |
@@ -83,7 +83,7 @@ If they don't have a published MCP URL, use their GitHub README description. The
 
 | Week | DMs Sent | Replies | Conversions | Revenue |
 |------|----------|---------|-------------|---------|
-| Mar 29 | 1 (Exa) | 0 | 0 | $0 |
+| Mar 29 | 3 (Exa, nichxbt, ryanthegentry) | 0 | 0 | $0 |
 | Apr 5 | | | | |
 | Apr 12 | | | | |
 | Apr 19 | | | | |
