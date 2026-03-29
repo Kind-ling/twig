@@ -7,7 +7,9 @@
 
 | # | Name / Handle | Project | Channel | Stars | Why Twig | Status |
 |---|---------------|---------|---------|-------|----------|--------|
-| 1 | @nullbuilds | nullbuilds-ai/x402-mcp | Twitter DM | 0★ | x402 MCP builder — tool descriptions are the first thing agents evaluate | No reply |
+| 1 | @nullbuilds | nullbuilds-ai/x402-mcp | Twitter DM | 0★ | x402 MCP builder — tool descriptions are the first thing agents evaluate | ❌ DMs closed |
+| 1b | @AgentlyHQ | AgentlyHQ/aixyz | Twitter DM | 81★ | Active agent framework builder, Twitter open | No reply |
+| 1c | @BitRouterAI | bitrouter/bitrouter | Twitter DM | 26★ | x402 routing, pays-per-call — every skipped description is lost revenue | No reply |
 | 2 | @nichxbt (nirholas) | nirholas/x402-deploy | Twitter DM | 17★ | "Turn any API into a paid service" — if agents can't read the description, they skip it | No reply |
 | 3 | @ryanthegentry | ryanthegentry/402index-mcp-server | Twitter DM | 2★ | 402 Index has 15K+ endpoints — if description quality is low across the catalog, every provider loses | No reply |
 | 4 | @androgavidia | leandrogavidia/solx402-mcp-server | Twitter DM | 6★ | Solana x402 MCP — niche positioning, better description = better agent routing | No reply |
