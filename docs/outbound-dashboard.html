@@ -78,7 +78,7 @@
   }
 
   /* ── Layout ── */
-  .main { padding: 28px 32px; max-width: 1400px; margin: 0 auto; }
+  .main { padding: 28px 32px; max-width: 1600px; margin: 0 auto; }
 
   .section { margin-bottom: 32px; }
   .section-title {
@@ -119,7 +119,7 @@
 
   .funnel-steps {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 0;
     position: relative;
   }
@@ -134,11 +134,18 @@
     content: '→';
     position: absolute;
     right: -6px;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 38px;
     color: var(--text-muted);
     font-size: 18px;
     z-index: 1;
+  }
+
+  .funnel-conversion {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
   }
 
   .funnel-bar-wrap {
@@ -180,15 +187,17 @@
     border: 1px solid var(--border);
     border-radius: 12px;
     overflow: hidden;
+    overflow-x: auto;
   }
 
   table {
     width: 100%;
     border-collapse: collapse;
+    min-width: 1100px;
   }
 
   thead th {
-    padding: 12px 14px;
+    padding: 12px 12px;
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 1px;
@@ -207,12 +216,24 @@
   tbody tr:last-child { border-bottom: none; }
   tbody tr:hover { background: var(--void-3); }
 
+  /* Section dividers */
+  tbody tr.section-divider td {
+    padding: 6px 12px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--ember);
+    background: var(--ember-glow);
+    border-bottom: 1px solid rgba(232,101,42,0.2);
+  }
+
   td {
-    padding: 11px 14px;
+    padding: 10px 12px;
     vertical-align: middle;
   }
 
-  td.num { color: var(--text-muted); font-size: 12px; width: 36px; }
+  td.num { color: var(--text-muted); font-size: 12px; width: 32px; }
   td.prospect { font-weight: 600; }
   td.repo a {
     color: var(--text-dim);
@@ -256,19 +277,24 @@
   .status-demo     { background: rgba(232,101,42,0.15); color: var(--ember); border: 1px solid rgba(232,101,42,0.3); }
   .status-paid     { background: rgba(46,204,113,0.15); color: #2ECC71; border: 1px solid rgba(46,204,113,0.3); }
 
-  .score {
-    font-family: 'SF Mono', 'Fira Code', monospace;
-    font-size: 12px;
-    font-weight: 700;
+  .source-tag {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    display: inline-block;
+    white-space: nowrap;
   }
-  .score-f { color: #E74C3C; }
-  .score-d { color: #E67E22; }
-  .score-c { color: #F1C40F; }
-  .score-b { color: #2ECC71; }
-  .score-a { color: #3498DB; }
-  .score-na { color: var(--text-muted); font-weight: 400; }
+  .source-trending { background: rgba(52,152,219,0.15); color: #5DADE2; border: 1px solid rgba(52,152,219,0.25); }
+  .source-awesomemcp { background: rgba(46,204,113,0.12); color: #27AE60; border: 1px solid rgba(46,204,113,0.25); }
+  .source-prior { background: var(--void-4); color: var(--text-muted); border: 1px solid var(--border); }
 
-  .notes { color: var(--text-dim); font-size: 12px; max-width: 200px; }
+  .mongap-yes { font-size: 11px; color: #E74C3C; font-weight: 600; }
+  .mongap-unknown { font-size: 11px; color: var(--text-muted); }
+
+  .followup-date { font-size: 12px; color: var(--yellow); font-family: 'SF Mono','Fira Code', monospace; }
+  .followup-blank { color: var(--text-muted); }
+
+  .notes { color: var(--text-dim); font-size: 12px; max-width: 180px; }
 
   /* ── Two column grid ── */
   .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -314,6 +340,19 @@
     background: var(--ember);
     border-radius: 3px;
   }
+
+  .channel-callout {
+    margin-top: 10px;
+    padding: 14px 16px;
+    background: rgba(241,196,15,0.07);
+    border: 1px solid rgba(241,196,15,0.25);
+    border-left: 3px solid var(--yellow);
+    border-radius: 8px;
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+  .channel-callout strong { color: var(--text); }
 
   /* ── Top 5 list ── */
   .followup-list { display: flex; flex-direction: column; gap: 12px; }
@@ -445,10 +484,19 @@
       <div class="funnel-steps">
         <div class="funnel-step">
           <div class="funnel-bar-wrap">
-            <div class="funnel-bar" style="width:100%; background: #3498DB;">30</div>
+            <div class="funnel-bar" style="width:100%; background: #666677;">30</div>
+          </div>
+          <div class="stage-name">Pipeline</div>
+          <div class="stage-pct">All prospects</div>
+          <div class="funnel-conversion">↓ 47% contacted</div>
+        </div>
+        <div class="funnel-step">
+          <div class="funnel-bar-wrap">
+            <div class="funnel-bar" style="width:100%; background: #3498DB;">14</div>
           </div>
           <div class="stage-name">Contacted</div>
-          <div class="stage-pct">14 sent (47%)</div>
+          <div class="stage-pct">14 / 30 sent</div>
+          <div class="funnel-conversion">↓ 0% replied</div>
         </div>
         <div class="funnel-step">
           <div class="funnel-bar-wrap">
@@ -457,7 +505,8 @@
             </div>
           </div>
           <div class="stage-name">Replied</div>
-          <div class="stage-pct">0 (0%)</div>
+          <div class="stage-pct">0 (pending)</div>
+          <div class="funnel-conversion">↓ 0% demo</div>
         </div>
         <div class="funnel-step">
           <div class="funnel-bar-wrap">
@@ -467,6 +516,7 @@
           </div>
           <div class="stage-name">Demo</div>
           <div class="stage-pct">0 (0%)</div>
+          <div class="funnel-conversion">↓ 0% close</div>
         </div>
         <div class="funnel-step">
           <div class="funnel-bar-wrap">
@@ -476,6 +526,7 @@
           </div>
           <div class="stage-name">Paid</div>
           <div class="stage-pct">0 — NEED 1 ⚡</div>
+          <div class="funnel-conversion">&nbsp;</div>
         </div>
       </div>
     </div>
@@ -483,7 +534,7 @@
 
   <!-- Prospect Table -->
   <div class="section">
-    <div class="section-title">Prospect Pipeline — 30 Total</div>
+    <div class="section-title">Prospect Pipeline — 30 Total (14 contacted · 10 new >50★ sourced)</div>
     <div class="table-wrap">
       <table>
         <thead>
@@ -494,13 +545,19 @@
             <th>Stars</th>
             <th>Channel</th>
             <th>Outreach Date</th>
+            <th>Follow-up Date</th>
             <th>Status</th>
-            <th>Twig Score</th>
+            <th>Source</th>
+            <th>Monitoring Gap</th>
             <th>Notes</th>
           </tr>
         </thead>
         <tbody>
-          <!-- EXISTING 13 + Will Bryk -->
+
+          <!-- ── CONTACTED (existing prior research) ── -->
+          <tr class="section-divider">
+            <td colspan="11">✉️ Contacted — 13 outreach sent (+ 1 Discord) = 14 total · Prior research · Follow-up: 2026-04-01</td>
+          </tr>
           <tr>
             <td class="num">1</td>
             <td class="prospect">@WilliamBryk (Exa)</td>
@@ -508,9 +565,11 @@
             <td><span class="stars">340</span></td>
             <td><span class="channel-tag">Twitter DM</span></td>
             <td>2026-03-29</td>
+            <td class="followup-date">2026-03-31</td>
             <td><span class="status-badge status-contacted">contacted</span></td>
-            <td><span class="score score-f">F-20</span></td>
-            <td class="notes">CEO DM sent. exa/answer scored F-20, find-similar F-29. High value target.</td>
+            <td><span class="source-tag source-prior">Prior research</span></td>
+            <td class="mongap-yes">Yes</td>
+            <td class="notes">CEO DM sent. exa/answer F-20, find-similar F-29. High value target. 48h follow-up rule.</td>
           </tr>
           <tr>
             <td class="num">2</td>
@@ -519,8 +578,10 @@
             <td><span class="stars">8</span></td>
             <td><span class="channel-tag">GitHub / Discord</span></td>
             <td>2026-03-29</td>
+            <td class="followup-date">2026-04-01</td>
             <td><span class="status-badge status-contacted">contacted</span></td>
-            <td><span class="score score-na">—</span></td>
+            <td><span class="source-tag source-prior">Prior research</span></td>
+            <td class="mongap-yes">Yes</td>
             <td class="notes">BTC/crypto payments MCP. Already in ecosystem.</td>
           </tr>
           <tr>
@@ -530,8 +591,10 @@
             <td><span class="stars">49</span></td>
             <td><span class="channel-tag">GitHub / Twitter</span></td>
             <td>2026-03-29</td>
+            <td class="followup-date">2026-04-01</td>
             <td><span class="status-badge status-contacted">contacted</span></td>
-            <td><span class="score score-na">—</span></td>
+            <td><span class="source-tag source-prior">Prior research</span></td>
+            <td class="mongap-unknown">Unknown</td>
             <td class="notes">Near 50 stars, solo dev, fast decisions likely.</td>
           </tr>
           <tr>
@@ -541,8 +604,10 @@
             <td><span class="stars">17</span></td>
             <td><span class="channel-tag">GitHub</span></td>
             <td>2026-03-29</td>
+            <td class="followup-date">2026-04-01</td>
             <td><span class="status-badge status-contacted">contacted</span></td>
-            <td><span class="score score-na">—</span></td>
+            <td><span class="source-tag source-prior">Prior research</span></td>
+            <td class="mongap-unknown">Unknown</td>
             <td class="notes">x402 payment stack — prime Twig target.</td>
           </tr>
           <tr>
@@ -552,8 +617,10 @@
             <td><span class="stars">11</span></td>
             <td><span class="channel-tag">GitHub</span></td>
             <td>2026-03-29</td>
+            <td class="followup-date">2026-04-01</td>
             <td><span class="status-badge status-contacted">contacted</span></td>
-            <td><span class="score score-na">—</span></td>
+            <td><span class="source-tag source-prior">Prior research</span></td>
+            <td class="mongap-yes">Yes</td>
             <td class="notes">Crypto-native MCP, small team.</td>
           </tr>
           <tr>
@@ -563,8 +630,10 @@
             <td><span class="stars">16</span></td>
             <td><span class="channel-tag">GitHub</span></td>
             <td>2026-03-29</td>
+            <td class="followup-date">2026-04-01</td>
             <td><span class="status-badge status-contacted">contacted</span></td>
-            <td><span class="score score-na">—</span></td>
+            <td><span class="source-tag source-prior">Prior research</span></td>
+            <td class="mongap-yes">Yes</td>
             <td class="notes">DeFi protocol with MCP. Quality signal matters.</td>
           </tr>
           <tr>
@@ -574,8 +643,10 @@
             <td><span class="stars">6</span></td>
             <td><span class="channel-tag">GitHub</span></td>
             <td>2026-03-29</td>
+            <td class="followup-date">2026-04-01</td>
             <td><span class="status-badge status-contacted">contacted</span></td>
-            <td><span class="score score-na">—</span></td>
+            <td><span class="source-tag source-prior">Prior research</span></td>
+            <td class="mongap-yes">Yes</td>
             <td class="notes">Solana x402 payments — perfect Twig fit.</td>
           </tr>
           <tr>
@@ -585,8 +656,10 @@
             <td><span class="stars">0</span></td>
             <td><span class="channel-tag">GitHub</span></td>
             <td>2026-03-29</td>
+            <td class="followup-date">2026-04-01</td>
             <td><span class="status-badge status-contacted">contacted</span></td>
-            <td><span class="score score-na">—</span></td>
+            <td><span class="source-tag source-prior">Prior research</span></td>
+            <td class="mongap-yes">Yes</td>
             <td class="notes">x402 MCP builder. Early stage.</td>
           </tr>
           <tr>
@@ -596,8 +669,10 @@
             <td><span class="stars">2</span></td>
             <td><span class="channel-tag">GitHub</span></td>
             <td>2026-03-29</td>
+            <td class="followup-date">2026-04-01</td>
             <td><span class="status-badge status-contacted">contacted</span></td>
-            <td><span class="score score-na">—</span></td>
+            <td><span class="source-tag source-prior">Prior research</span></td>
+            <td class="mongap-yes">Yes</td>
             <td class="notes">Wallet-focused MCP. Crypto payments native.</td>
           </tr>
           <tr>
@@ -607,8 +682,10 @@
             <td><span class="stars">2</span></td>
             <td><span class="channel-tag">GitHub</span></td>
             <td>2026-03-29</td>
+            <td class="followup-date">2026-04-01</td>
             <td><span class="status-badge status-contacted">contacted</span></td>
-            <td><span class="score score-na">—</span></td>
+            <td><span class="source-tag source-prior">Prior research</span></td>
+            <td class="mongap-yes">Yes</td>
             <td class="notes">402 index — cataloging x402 APIs.</td>
           </tr>
           <tr>
@@ -618,8 +695,10 @@
             <td><span class="stars">7</span></td>
             <td><span class="channel-tag">GitHub</span></td>
             <td>2026-03-29</td>
+            <td class="followup-date">2026-04-01</td>
             <td><span class="status-badge status-contacted">contacted</span></td>
-            <td><span class="score score-na">—</span></td>
+            <td><span class="source-tag source-prior">Prior research</span></td>
+            <td class="mongap-yes">Yes</td>
             <td class="notes">Lightning wallet MCP. Needs uptime/quality data.</td>
           </tr>
           <tr>
@@ -629,8 +708,10 @@
             <td><span class="stars">8</span></td>
             <td><span class="channel-tag">GitHub</span></td>
             <td>2026-03-29</td>
+            <td class="followup-date">2026-04-01</td>
             <td><span class="status-badge status-contacted">contacted</span></td>
-            <td><span class="score score-na">—</span></td>
+            <td><span class="source-tag source-prior">Prior research</span></td>
+            <td class="mongap-yes">Yes</td>
             <td class="notes">DEX MCP. Users expect reliable API quality.</td>
           </tr>
           <tr>
@@ -640,187 +721,229 @@
             <td><span class="stars">8</span></td>
             <td><span class="channel-tag">GitHub</span></td>
             <td>2026-03-29</td>
+            <td class="followup-date">2026-04-01</td>
             <td><span class="status-badge status-contacted">contacted</span></td>
-            <td><span class="score score-na">—</span></td>
+            <td><span class="source-tag source-prior">Prior research</span></td>
+            <td class="mongap-unknown">Unknown</td>
             <td class="notes">ML infra team. Likely cares about quality metrics.</td>
+          </tr>
+
+          <!-- ── NEW SOURCED PROSPECTS — >50 stars ── -->
+          <tr class="section-divider">
+            <td colspan="11">🌟 New Sourced Prospects — 10 qualifying (all >50★) · GitHub Trending + Awesome-MCP list · Not yet contacted</td>
           </tr>
           <tr>
             <td class="num">14</td>
-            <td class="prospect">kilkelly (Nano)</td>
-            <td class="repo"><a href="https://github.com/kilkelly/nano-currency-mcp-server" target="_blank">kilkelly/nano-currency-mcp-server</a></td>
-            <td><span class="stars">9</span></td>
-            <td><span class="channel-tag">GitHub</span></td>
+            <td class="prospect">Composio</td>
+            <td class="repo"><a href="https://github.com/ComposioHQ/composio" target="_blank">ComposioHQ/composio</a></td>
+            <td><span class="stars">16,000</span></td>
+            <td><span class="channel-tag">GitHub / Discord</span></td>
             <td>—</td>
+            <td class="followup-blank">—</td>
             <td><span class="status-badge status-new">new</span></td>
-            <td><span class="score score-na">—</span></td>
-            <td class="notes">Nano crypto MCP. Feeless payments angle.</td>
+            <td><span class="source-tag source-awesomemcp">Awesome-MCP</span></td>
+            <td class="mongap-yes">Yes — no monitoring in README</td>
+            <td class="notes">Largest MCP/tool platform. 16k★. Quality scoring = core value prop.</td>
           </tr>
-
-          <!-- NEW HIGH-STAR PROSPECTS -->
           <tr>
             <td class="num">15</td>
             <td class="prospect">modelcontextprotocol (Official)</td>
             <td class="repo"><a href="https://github.com/modelcontextprotocol/servers" target="_blank">modelcontextprotocol/servers</a></td>
-            <td><span class="stars">14200</span></td>
+            <td><span class="stars">14,000</span></td>
             <td><span class="channel-tag">GitHub Issue</span></td>
             <td>—</td>
+            <td class="followup-blank">—</td>
             <td><span class="status-badge status-new">new</span></td>
-            <td><span class="score score-na">—</span></td>
-            <td class="notes">Official MCP repo. Open issue proposing Twig as quality layer could go viral.</td>
+            <td><span class="source-tag source-trending">GitHub Trending</span></td>
+            <td class="mongap-yes">Yes — no monitoring in README</td>
+            <td class="notes">Official MCP repo. Issue proposing Twig as quality layer could go viral.</td>
           </tr>
           <tr>
             <td class="num">16</td>
-            <td class="prospect">jlowin (FastMCP)</td>
-            <td class="repo"><a href="https://github.com/jlowin/fastmcp" target="_blank">jlowin/fastmcp</a></td>
-            <td><span class="stars">3800</span></td>
-            <td><span class="channel-tag">GitHub / Twitter</span></td>
+            <td class="prospect">wong2 (awesome-mcp-servers)</td>
+            <td class="repo"><a href="https://github.com/wong2/awesome-mcp-servers" target="_blank">wong2/awesome-mcp-servers</a></td>
+            <td><span class="stars">9,400</span></td>
+            <td><span class="channel-tag">GitHub Issue</span></td>
             <td>—</td>
+            <td class="followup-blank">—</td>
             <td><span class="status-badge status-new">new</span></td>
-            <td><span class="score score-na">—</span></td>
-            <td class="notes">Most popular Python MCP framework. Author is influential. Solo creator = fast decision.</td>
+            <td><span class="source-tag source-trending">GitHub Trending</span></td>
+            <td class="mongap-unknown">Unknown</td>
+            <td class="notes">Major MCP curated list curator. Inclusion = distribution.</td>
           </tr>
           <tr>
             <td class="num">17</td>
             <td class="prospect">github/github-mcp-server</td>
             <td class="repo"><a href="https://github.com/github/github-mcp-server" target="_blank">github/github-mcp-server</a></td>
-            <td><span class="stars">8100</span></td>
+            <td><span class="stars">8,100</span></td>
             <td><span class="channel-tag">GitHub Issue</span></td>
             <td>—</td>
+            <td class="followup-blank">—</td>
             <td><span class="status-badge status-new">new</span></td>
-            <td><span class="score score-na">—</span></td>
-            <td class="notes">Official GitHub MCP. Enterprise users expect SLA/quality. High-value if lands.</td>
+            <td><span class="source-tag source-trending">GitHub Trending</span></td>
+            <td class="mongap-yes">Yes — no monitoring in README</td>
+            <td class="notes">Official GitHub MCP. Enterprise users expect SLA/quality.</td>
           </tr>
           <tr>
             <td class="num">18</td>
-            <td class="prospect">exa-labs (MCP Server)</td>
-            <td class="repo"><a href="https://github.com/exa-labs/exa-mcp-server" target="_blank">exa-labs/exa-mcp-server</a></td>
-            <td><span class="stars">340</span></td>
-            <td><span class="channel-tag">GitHub Issue</span></td>
+            <td class="prospect">jlowin (FastMCP)</td>
+            <td class="repo"><a href="https://github.com/jlowin/fastmcp" target="_blank">jlowin/fastmcp</a></td>
+            <td><span class="stars">3,800</span></td>
+            <td><span class="channel-tag">GitHub / Twitter</span></td>
             <td>—</td>
+            <td class="followup-blank">—</td>
             <td><span class="status-badge status-new">new</span></td>
-            <td><span class="score score-f">F-20</span></td>
-            <td class="notes">Backup channel — file issue on repo while waiting for CEO DM reply.</td>
+            <td><span class="source-tag source-awesomemcp">Awesome-MCP</span></td>
+            <td class="mongap-yes">Yes — no monitoring in README</td>
+            <td class="notes">Most popular Python MCP framework. Solo creator = fast decision.</td>
           </tr>
           <tr>
             <td class="num">19</td>
+            <td class="prospect">Coinbase (AgentKit)</td>
+            <td class="repo"><a href="https://github.com/coinbase/agentkit" target="_blank">coinbase/agentkit</a></td>
+            <td><span class="stars">1,800</span></td>
+            <td><span class="channel-tag">GitHub / Discord</span></td>
+            <td>—</td>
+            <td class="followup-blank">—</td>
+            <td><span class="status-badge status-new">new</span></td>
+            <td><span class="source-tag source-trending">GitHub Trending</span></td>
+            <td class="mongap-yes">Yes — no monitoring in README</td>
+            <td class="notes">Coinbase crypto payment agent framework. Moves real money.</td>
+          </tr>
+          <tr>
+            <td class="num">20</td>
+            <td class="prospect">Stripe (agent-toolkit)</td>
+            <td class="repo"><a href="https://github.com/stripe/agent-toolkit" target="_blank">stripe/agent-toolkit</a></td>
+            <td><span class="stars">1,200</span></td>
+            <td><span class="channel-tag">GitHub Issue</span></td>
+            <td>—</td>
+            <td class="followup-blank">—</td>
+            <td><span class="status-badge status-new">new</span></td>
+            <td><span class="source-tag source-trending">GitHub Trending</span></td>
+            <td class="mongap-yes">Yes — no monitoring in README</td>
+            <td class="notes">Stripe payment MCP. Enterprise users. Quality/uptime = money at stake.</td>
+          </tr>
+          <tr>
+            <td class="num">21</td>
             <td class="prospect">browserbase (Stagehand)</td>
             <td class="repo"><a href="https://github.com/browserbase/mcp-server-browserbase" target="_blank">browserbase/mcp-server-browserbase</a></td>
             <td><span class="stars">680</span></td>
             <td><span class="channel-tag">GitHub / Twitter</span></td>
             <td>—</td>
+            <td class="followup-blank">—</td>
             <td><span class="status-badge status-new">new</span></td>
-            <td><span class="score score-na">—</span></td>
+            <td><span class="source-tag source-trending">GitHub Trending</span></td>
+            <td class="mongap-yes">Yes — no monitoring in README</td>
             <td class="notes">Browser automation MCP. High user count, uptime critical.</td>
           </tr>
           <tr>
-            <td class="num">20</td>
+            <td class="num">22</td>
             <td class="prospect">tavily-ai</td>
             <td class="repo"><a href="https://github.com/tavily-ai/tavily-mcp" target="_blank">tavily-ai/tavily-mcp</a></td>
             <td><span class="stars">520</span></td>
             <td><span class="channel-tag">GitHub / Twitter</span></td>
             <td>—</td>
+            <td class="followup-blank">—</td>
             <td><span class="status-badge status-new">new</span></td>
-            <td><span class="score score-na">—</span></td>
-            <td class="notes">Search API MCP used in thousands of agent apps. Twig could catch quality regressions.</td>
-          </tr>
-          <tr>
-            <td class="num">21</td>
-            <td class="prospect">Stripe (agent-toolkit)</td>
-            <td class="repo"><a href="https://github.com/stripe/agent-toolkit" target="_blank">stripe/agent-toolkit</a></td>
-            <td><span class="stars">1200</span></td>
-            <td><span class="channel-tag">GitHub Issue</span></td>
-            <td>—</td>
-            <td><span class="status-badge status-new">new</span></td>
-            <td><span class="score score-na">—</span></td>
-            <td class="notes">Stripe payment MCP. Enterprise users. Quality/uptime = money at stake.</td>
-          </tr>
-          <tr>
-            <td class="num">22</td>
-            <td class="prospect">wong2 (awesome-mcp-servers)</td>
-            <td class="repo"><a href="https://github.com/wong2/awesome-mcp-servers" target="_blank">wong2/awesome-mcp-servers</a></td>
-            <td><span class="stars">9400</span></td>
-            <td><span class="channel-tag">GitHub Issue</span></td>
-            <td>—</td>
-            <td><span class="status-badge status-new">new</span></td>
-            <td><span class="score score-na">—</span></td>
-            <td class="notes">Curator of MCP ecosystem. Inclusion in list = distribution. Issue pitch worth trying.</td>
+            <td><span class="source-tag source-awesomemcp">Awesome-MCP</span></td>
+            <td class="mongap-yes">Yes — no monitoring in README</td>
+            <td class="notes">Search API MCP used in thousands of agent apps.</td>
           </tr>
           <tr>
             <td class="num">23</td>
-            <td class="prospect">punkpeye (awesome-mcp)</td>
-            <td class="repo"><a href="https://github.com/punkpeye/awesome-mcp-servers" target="_blank">punkpeye/awesome-mcp-servers</a></td>
-            <td><span class="stars">5100</span></td>
-            <td><span class="channel-tag">GitHub Issue</span></td>
-            <td>—</td>
-            <td><span class="status-badge status-new">new</span></td>
-            <td><span class="score score-na">—</span></td>
-            <td class="notes">Another major curated list. Cross-post Twig as a tool here.</td>
-          </tr>
-          <tr>
-            <td class="num">24</td>
-            <td class="prospect">Anthropic (claude-mcp)</td>
-            <td class="repo"><a href="https://github.com/anthropics/anthropic-tools" target="_blank">anthropics/anthropic-tools</a></td>
-            <td><span class="stars">760</span></td>
-            <td><span class="channel-tag">GitHub Issue</span></td>
-            <td>—</td>
-            <td><span class="status-badge status-new">new</span></td>
-            <td><span class="score score-na">—</span></td>
-            <td class="notes">Official tooling. Long shot but massive if it lands.</td>
-          </tr>
-          <tr>
-            <td class="num">25</td>
-            <td class="prospect">Composio</td>
-            <td class="repo"><a href="https://github.com/ComposioHQ/composio" target="_blank">ComposioHQ/composio</a></td>
-            <td><span class="stars">16000</span></td>
-            <td><span class="channel-tag">GitHub / Discord</span></td>
-            <td>—</td>
-            <td><span class="status-badge status-new">new</span></td>
-            <td><span class="score score-na">—</span></td>
-            <td class="notes">Largest MCP/tool integration platform. 16k stars. Quality scoring = core value prop.</td>
-          </tr>
-          <tr>
-            <td class="num">26</td>
             <td class="prospect">Zapier (MCP)</td>
             <td class="repo"><a href="https://github.com/zapier/zapier-mcp" target="_blank">zapier/zapier-mcp</a></td>
             <td><span class="stars">410</span></td>
             <td><span class="channel-tag">GitHub Issue</span></td>
             <td>—</td>
+            <td class="followup-blank">—</td>
             <td><span class="status-badge status-new">new</span></td>
-            <td><span class="score score-na">—</span></td>
-            <td class="notes">10k+ tool integrations via MCP. Any tool quality issues = workflow breakage.</td>
+            <td><span class="source-tag source-awesomemcp">Awesome-MCP</span></td>
+            <td class="mongap-yes">Yes — no monitoring in README</td>
+            <td class="notes">10k+ tool integrations via MCP. Any quality issue = workflow breakage.</td>
+          </tr>
+
+          <!-- ── PRE-EXISTING / ADDITIONAL PROSPECTS ── -->
+          <tr class="section-divider">
+            <td colspan="11">📋 Additional Prospects — Prior research or pre-existing outreach · Not yet contacted</td>
+          </tr>
+          <tr>
+            <td class="num">24</td>
+            <td class="prospect">kilkelly (Nano)</td>
+            <td class="repo"><a href="https://github.com/kilkelly/nano-currency-mcp-server" target="_blank">kilkelly/nano-currency-mcp-server</a></td>
+            <td><span class="stars">9</span></td>
+            <td><span class="channel-tag">GitHub</span></td>
+            <td>—</td>
+            <td class="followup-blank">—</td>
+            <td><span class="status-badge status-new">new</span></td>
+            <td><span class="source-tag source-prior">Prior research</span></td>
+            <td class="mongap-yes">Yes</td>
+            <td class="notes">Nano crypto MCP. Feeless payments angle. &lt;50★ — lower priority.</td>
+          </tr>
+          <tr>
+            <td class="num">25</td>
+            <td class="prospect">exa-labs (backup channel)</td>
+            <td class="repo"><a href="https://github.com/exa-labs/exa-mcp-server" target="_blank">exa-labs/exa-mcp-server</a></td>
+            <td><span class="stars">340</span></td>
+            <td><span class="channel-tag">GitHub Issue</span></td>
+            <td>—</td>
+            <td class="followup-blank">—</td>
+            <td><span class="status-badge status-new">new</span></td>
+            <td><span class="source-tag source-prior">Prior research</span></td>
+            <td class="mongap-yes">Yes</td>
+            <td class="notes">Backup channel — file issue while waiting for CEO DM reply.</td>
+          </tr>
+          <tr>
+            <td class="num">26</td>
+            <td class="prospect">punkpeye (awesome-mcp)</td>
+            <td class="repo"><a href="https://github.com/punkpeye/awesome-mcp-servers" target="_blank">punkpeye/awesome-mcp-servers</a></td>
+            <td><span class="stars">5,100</span></td>
+            <td><span class="channel-tag">GitHub Issue</span></td>
+            <td>—</td>
+            <td class="followup-blank">—</td>
+            <td><span class="status-badge status-new">new</span></td>
+            <td><span class="source-tag source-prior">Prior research</span></td>
+            <td class="mongap-unknown">Unknown</td>
+            <td class="notes">Another major curated MCP list. Cross-post Twig as a tool here.</td>
           </tr>
           <tr>
             <td class="num">27</td>
-            <td class="prospect">modelcontextprotocol (Python SDK)</td>
-            <td class="repo"><a href="https://github.com/modelcontextprotocol/python-sdk" target="_blank">modelcontextprotocol/python-sdk</a></td>
-            <td><span class="stars">3200</span></td>
+            <td class="prospect">Anthropic (claude tools)</td>
+            <td class="repo"><a href="https://github.com/anthropics/anthropic-tools" target="_blank">anthropics/anthropic-tools</a></td>
+            <td><span class="stars">760</span></td>
             <td><span class="channel-tag">GitHub Issue</span></td>
             <td>—</td>
+            <td class="followup-blank">—</td>
             <td><span class="status-badge status-new">new</span></td>
-            <td><span class="score score-na">—</span></td>
-            <td class="notes">SDK maintainers = gatekeepers. Twig as official companion tool?</td>
+            <td><span class="source-tag source-prior">Prior research</span></td>
+            <td class="mongap-unknown">Unknown</td>
+            <td class="notes">Official tooling. Long shot but massive if it lands.</td>
           </tr>
           <tr>
             <td class="num">28</td>
+            <td class="prospect">modelcontextprotocol (Python SDK)</td>
+            <td class="repo"><a href="https://github.com/modelcontextprotocol/python-sdk" target="_blank">modelcontextprotocol/python-sdk</a></td>
+            <td><span class="stars">3,200</span></td>
+            <td><span class="channel-tag">GitHub Issue</span></td>
+            <td>—</td>
+            <td class="followup-blank">—</td>
+            <td><span class="status-badge status-new">new</span></td>
+            <td><span class="source-tag source-prior">Prior research</span></td>
+            <td class="mongap-unknown">Unknown</td>
+            <td class="notes">SDK maintainers = gatekeepers. Twig as official companion tool?</td>
+          </tr>
+          <tr>
+            <td class="num">29</td>
             <td class="prospect">near-intents</td>
             <td class="repo"><a href="https://github.com/near-intents/near-mcp" target="_blank">near-intents/near-mcp</a></td>
             <td><span class="stars">55</span></td>
             <td><span class="channel-tag">GitHub / Discord</span></td>
             <td>—</td>
+            <td class="followup-blank">—</td>
             <td><span class="status-badge status-new">new</span></td>
-            <td><span class="score score-c">C-55</span></td>
+            <td><span class="source-tag source-prior">Prior research</span></td>
+            <td class="mongap-yes">Yes</td>
             <td class="notes">NEAR protocol MCP. Already scored C-55 by Twig. Gap proven.</td>
-          </tr>
-          <tr>
-            <td class="num">29</td>
-            <td class="prospect">Coinbase (AgentKit MCP)</td>
-            <td class="repo"><a href="https://github.com/coinbase/agentkit" target="_blank">coinbase/agentkit</a></td>
-            <td><span class="stars">1800</span></td>
-            <td><span class="channel-tag">GitHub / Discord</span></td>
-            <td>—</td>
-            <td><span class="status-badge status-new">new</span></td>
-            <td><span class="score score-na">—</span></td>
-            <td class="notes">Coinbase crypto payment agent framework. Exactly Twig's ecosystem.</td>
           </tr>
           <tr>
             <td class="num">30</td>
@@ -829,10 +952,13 @@
             <td><span class="stars">—</span></td>
             <td><span class="channel-tag">GitHub</span></td>
             <td>—</td>
+            <td class="followup-blank">—</td>
             <td><span class="status-badge status-new">new</span></td>
-            <td><span class="score score-d">D-43</span></td>
-            <td class="notes">Already scored D-43. Direct gap to demo.</td>
+            <td><span class="source-tag source-prior">Prior research</span></td>
+            <td class="mongap-yes">Yes</td>
+            <td class="notes">Already scored D-43. Direct gap to demo. Low★ — not in sourced batch.</td>
           </tr>
+
         </tbody>
       </table>
     </div>
@@ -889,6 +1015,11 @@
         </div>
       </div>
 
+      <!-- Channel performance callout -->
+      <div class="channel-callout">
+        ⚡ <strong>Best response channel:</strong> No data yet — all channels at 0% response rate. Will Bryk DM (Twitter) is the first live test case; follow-up due <strong>2026-03-31</strong>.
+      </div>
+
       <!-- Benchmark note -->
       <div style="margin-top:10px; padding:12px 14px; background:var(--void-2); border:1px solid var(--border); border-radius:8px; font-size:11px; color:var(--text-muted);">
         📊 <strong style="color:var(--text-dim)">Benchmark targets:</strong> Cold GitHub issue ~5-8% reply rate · Twitter DM (CEO) ~15-25% · Discord ~10-15% · Email ~3-6%
@@ -920,7 +1051,7 @@
           <div class="followup-rank r2">2</div>
           <div>
             <div class="followup-name">jlowin — FastMCP</div>
-            <div class="followup-why">⭐ 3800 stars · Solo creator = fastest decision · FastMCP is THE Python MCP framework · Quality scoring = natural extension · Highly engaged community</div>
+            <div class="followup-why">⭐ 3.8k stars · Solo creator = fastest decision · FastMCP is THE Python MCP framework · Quality scoring = natural extension · Highly engaged community</div>
             <div class="followup-hook">"FastMCP powers most Python MCP deployments — Twig can give every server built on it a live quality scorecard before it hits prod."</div>
             <div class="followup-next">
               <span class="action">GitHub Issue</span>
@@ -946,7 +1077,7 @@
           <div class="followup-rank r4">4</div>
           <div>
             <div class="followup-name">Coinbase — AgentKit MCP</div>
-            <div class="followup-why">💰 1800 stars · Coinbase brand = credibility magnet · Crypto-native payments built-in · Enterprise users with real $$ at stake · Quality failures = lost transactions</div>
+            <div class="followup-why">💰 1.8k stars · Coinbase brand = credibility magnet · Crypto-native payments built-in · Enterprise users with real $$ at stake · Quality failures = lost transactions</div>
             <div class="followup-hook">"AgentKit moves real money — Twig catches API quality regressions before they become failed transactions at scale."</div>
             <div class="followup-next">
               <span class="action">GitHub Issue + Discord</span>
@@ -981,7 +1112,7 @@
         <div style="font-size:12px; color:var(--text-dim); line-height:1.8;">
           ✓ Send 13 GitHub issues<br>
           ✓ DM @WilliamBryk<br>
-          → Follow-up Exa if no reply<br>
+          → Follow-up Exa if no reply by Mar 31<br>
           → DM nirholas<br>
           → Open FastMCP issue<br>
           → Open Coinbase issue
@@ -1025,7 +1156,7 @@
 <!-- Footer -->
 <div class="footer">
   <div>Kind-ling / Twig · Cold Outbound Dashboard · Updated 2026-03-29</div>
-  <div style="color:var(--ember)">Kill criterion: $1 revenue by 2026-04-28 · 30 prospects tracked</div>
+  <div style="color:var(--ember)">Kill criterion: $1 revenue by 2026-04-28 · 30 prospects · 10 new >50★ sourced · 14 contacted</div>
 </div>
 
 </body>
