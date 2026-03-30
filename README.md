@@ -65,6 +65,38 @@ twig intents crypto-defi
 
 ---
 
+## Live API
+
+Twig is available as a hosted API at **https://twig.kind-ling.com**
+
+```bash
+# Health check
+curl https://twig.kind-ling.com/health
+
+# Analyze any MCP server
+curl -X POST https://twig.kind-ling.com/analyze \
+  -H "Content-Type: application/json" \
+  -d '{"url": "https://your-mcp-server.com/mcp"}'
+
+# Optimize descriptions
+curl -X POST https://twig.kind-ling.com/optimize \
+  -H "Content-Type: application/json" \
+  -d '{"url": "https://your-mcp-server.com/mcp", "category": "crypto-defi"}'
+```
+
+**Response format:**
+```json
+{
+  "ok": true,
+  "url": "https://your-mcp-server.com/mcp",
+  "output": "🔍 Analyzing...\n  Score: 72/100 (C)\n  ..."
+}
+```
+
+No API key required for public endpoints. Rate limits apply.
+
+---
+
 ## Scoring Model
 
 Three dimensions, 0–100 each:
